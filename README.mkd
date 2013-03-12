@@ -1,0 +1,26 @@
+# About.
+
+Greps through a dirctory of txt files, and looks for @todo actions in those files.
+Also looks for lines that start with "-" without @done or @todo. These are potential todos.
+
+It then pops the results into a file, which has some format like the following:
+
+[[source txt file]]
+
+# Todos
+
+- aklsdfjlka @todo asdf;ls
+- asdfdsj @todo alksdfjas
+
+# Potential todo
+
+- alskdfjalsdk j
+- aldskfaskldfj
+
+# Completed items
+
+- asldkfjalskdjf @done
+- alsdkfjas @done
+
+
+
