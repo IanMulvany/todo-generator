@@ -1,21 +1,15 @@
 import glob
+from collections import defaultdict
 
 NOTES_DIR = "~/Dropbox/notes/.*"
 
 notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")
 
-def is_done(line):
-	if line.find("@done") >-1 :
+def has_tag(line, tag):
+	if line.find(tag) >-1 :
 		return True
 	else:
-		return False
-
-def is_todo(line):
-	if is_done(line) is False:
-		if line.find("@todo") > -1:
-			return True
-		else:
-			return False		
+		return False	
 
 def is_maybe(line):
 	if line.find("-") ==0 :
