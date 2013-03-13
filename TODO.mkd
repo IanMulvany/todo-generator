@@ -1,0 +1,4 @@
+ 2013-03-13
+
+- add option parser to pass the report type to the script
+- add a decorator to `has_tag` that includes logic to excluse r.g. @todos that also have @dones when looking for @todos
