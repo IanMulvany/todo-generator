@@ -1,6 +1,23 @@
 import glob
 from collections import defaultdict
 
+
+"""
+# some example decorator code
+
+def makeitalic(fn):
+    def wrapped():
+        return "<i>" + fn() + "</i>"
+    return wrapped
+
+@makebold
+@makeitalic
+def hello():
+    return "hello world"
+
+"""
+
+
 NOTES_DIR = "~/Dropbox/notes/.*"
 
 notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")
