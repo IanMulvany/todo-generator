@@ -23,66 +23,34 @@ def get_nvname(note_name):
 	nvname = current2
 	return nvname
 
-def long_report():
+tags = ["@todo", "@done", "@later"]
+
+def parse_notes():
+	note_actions = []
 	for note in notes:
-		dones = []
-		todos = []
+		note_tags = defaultdict(list)
 		maybes = []
 		lines = open(note,"r").readlines()
 		for line in lines:
 			test_line = line.strip()
-			if is_todo(test_line):
-				#print test_line
-				todos.append(test_line)
-			elif is_done(test_line):
-				#print test_line
-				dones.append(test_line)
-			elif is_maybe(test_line):
-				print test_line
-				maybes.append(test_line)
-			else:
-				continue
-	"""	
-		if len(dones) > 0 or len(todos) > 0 or len(maybes) > 0:
-			print "[["+note+"]]"
-			print ""
-			print "# Todos"
-			for todo in todos: print todo
-			print ""
-			print "# maybes"
-			for maybe in maybes: print maybe
-			print ""
-			print "# dones"
-			for done in dones: print done 
-			print ""
-			print "---"
-	"""
+			for tag in tags:
+				if has_tag(test_line, tag):
+					note_tags[tag].append(test_line)
+		note_actions.append([note, note_tags])
+#		print note
+	return note_actions
 
-def todo_report():
-	for note in notes:
-		dones = []
-		todos = []
-		maybes = []
-		lines = open(note,"r").readlines()
-		for line in lines:
-			test_line = line.strip()
-			if is_todo(test_line):
-				#print test_line
-				todos.append(test_line)
-			elif is_done(test_line):
-				#print test_line
-				dones.append(test_line)
-			elif is_maybe(test_line):
-				maybes.append(test_line)
-			else:
-				continue
-		if len(todos) > 0:
-			print "[["+get_nvname(note)+"]]"
-			print ""
-			print "# Todos"
-			for todo in todos: print todo
-			print ""
-			print "---"
+def report_tag(note_actions, tag):
+	for note in note_actions:
+		note_name = note[0]
+		actions = note[1]
+		if len(actions) > 0:
+			tag_actions = actions[tag]
+			if len(tag_actions) > 0:
+				print "# " + "[["+get_nvname(note[0])+"]]:"
+				for action in tag_actions:
+					print action
+				print ""
 
-
-todo_report()
+note_actions = parse_notes()
+report_tag(note_actions, "@todo")
