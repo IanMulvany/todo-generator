@@ -1,5 +1,6 @@
 import glob
 from collections import defaultdict
+from optparse import OptionParser
 
 NOTES_DIR = "~/Dropbox/notes/.*"
 
@@ -72,6 +73,18 @@ def report_tag(note_actions, tag):
 					print action
 				print ""
 
+parser = OptionParser()
+parser.add_option("-t", "--type", dest="type", help="pick type of action to look for t - @todo, l @later, d @done", metavar="FILE")
+(options, args) = parser.parse_args()
+type = options.type 
+print type
+
 note_actions = parse_notes()
-print len(note_actions)
-report_tag(note_actions, "@done")
+if type == "t":
+	report_tag(note_actions, "@todo")
+elif type == "d":
+	report_tag(note_actions, "@done")
+elif type == "l":
+	report_tag(note_actions, "@later")
+else:
+	print "no action type specified"
