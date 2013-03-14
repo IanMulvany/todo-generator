@@ -5,7 +5,7 @@ from optparse import OptionParser
 NOTES_DIR = "~/Dropbox/notes/.*"
 
 def isInFilter(s):
-	filter_list = ["current-todos", "current-later", "current-dones"]
+	filter_list = ["current-todos", "current-later", "current-dones", "current-reminders"]
 	for f in filter_list:
 	    if s.find(f) != -1:
 	        return False
@@ -42,6 +42,9 @@ def check_done_status(fn):
 def check_later_status(fn):
 	return check_status(fn, "@later")
 
+def check_later_status(fn):
+	return check_status(fn, "@reminder")
+
 @check_later_status
 @check_done_status
 def has_tag(line, tag):
@@ -56,7 +59,7 @@ def get_nvname(note_name):
 	nvname = current2
 	return nvname
 
-tags = ["@todo", "@done", "@later"]
+tags = ["@todo", "@done", "@later", "@reminder"]
 
 def parse_notes(notes):
 	note_actions = []
@@ -85,7 +88,7 @@ def report_tag(note_actions, tag):
 				print ""
 
 parser = OptionParser()
-parser.add_option("-t", "--type", dest="type", help="pick type of action to look for t - @todo, l @later, d @done", metavar="FILE")
+parser.add_option("-t", "--type", dest="type", help="pick type of action to look for t - @todo, l @later, d @done, r @reminder", metavar="FILE")
 (options, args) = parser.parse_args()
 type = options.type 
 
@@ -98,5 +101,7 @@ elif type == "d":
 	report_tag(note_actions, "@done")
 elif type == "l":
 	report_tag(note_actions, "@later")
+elif type == "l":
+	report_tag(note_actions, "@reminder")
 else:
 	print "no action type specified"
