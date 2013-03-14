@@ -1,4 +1,11 @@
+2013-03-14
+- add a way to filter potential todos
+- schedule the task to run every 30 minutes
+- filter some notes from the notes list
+
+
+
  2013-03-13
 
 - add option parser to pass the report type to the script
-- add a decorator to `has_tag` that includes logic to excluse r.g. @todos that also have @dones when looking for @todos
+- add a decorator to `has_tag` that includes logic to excluse r.g. @todos that also have @dones when looking for @todos @done
