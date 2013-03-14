@@ -4,10 +4,19 @@ from optparse import OptionParser
 
 NOTES_DIR = "~/Dropbox/notes/.*"
 
+def isInFilter(s):
+	filter_list = ["current-todos", "current-later", "current-dones"]
+	for f in filter_list:
+	    if s.find(f) != -1:
+	        return False
+	    else:
+	    	continue
+	return True
 
 def get_notes():
-	notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")		
-	return notes
+	notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")
+	temp = filter(isInFilter, notes)
+	return temp
 
 def check_status(fn, test_tag):
 	def checker(*args):
