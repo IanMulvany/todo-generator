@@ -33,19 +33,25 @@ def check_later_status(fn):
 
 
 def check_done_status(fn):
+	# if the tag we are testing is "@done" then ignore this function. 
 	test_tag = "@done"
 	def checker(*args):
 		tag = args[1]
 		line = args[0]
-		if tag != test_tag:
-			#print line
-			print has_tag(line, test_tag),
-			print tag, test_tag
+		if tag == test_tag: # if the tag is done, just eval the function
+			return fn(line, tag)
+		else:
+			if line.find(test_tag) >-1 : 
+				# if the tag is not @ done, return false if @done is in 
+				# the line
+				return False
+			else:
+				# else eval the function
+				return fn(line, tag)
 	return checker
-	#check_status(fn, "@done")
 
 # @check_later_status
-#@check_done_status
+@check_done_status
 def has_tag(line, tag):
 	if line.find(tag) >-1 :
 		return True
