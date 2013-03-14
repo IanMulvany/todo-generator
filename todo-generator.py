@@ -32,13 +32,13 @@ def check_later_status(fn):
 	return checker"""
 
 
-def check_done_status(fn):
-	# if the tag we are testing is "@done" then ignore this function. 
-	test_tag = "@done"
+def check_status(fn, test_tag):
 	def checker(*args):
 		tag = args[1]
 		line = args[0]
-		if tag == test_tag: # if the tag is done, just eval the function
+		if tag == test_tag: 
+			# if the tag we are testing
+			# is the smdone, just eval the function
 			return fn(line, tag)
 		else:
 			if line.find(test_tag) >-1 : 
@@ -50,7 +50,13 @@ def check_done_status(fn):
 				return fn(line, tag)
 	return checker
 
-# @check_later_status
+def check_done_status(fn):
+	return check_status(fn, "@done")
+
+def check_later_status(fn):
+	return check_status(fn, "@later")
+
+@check_later_status
 @check_done_status
 def has_tag(line, tag):
 	if line.find(tag) >-1 :
@@ -101,4 +107,4 @@ def report_tag(note_actions, tag):
 
 note_actions = parse_notes()
 print len(note_actions)
-report_tag(note_actions, "@todo")
+report_tag(note_actions, "@done")
