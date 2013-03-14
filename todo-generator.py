@@ -1,35 +1,9 @@
 import glob
 from collections import defaultdict
 
-
-"""
-# some example decorator code
-
-def makeitalic(fn):
-    def wrapped():
-        return "<i>" + fn() + "</i>"
-    return wrapped
-
-@makebold
-@makeitalic
-def hello():
-    return "hello world"
-
-"""
-
-
 NOTES_DIR = "~/Dropbox/notes/.*"
 
 notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")
-
-"""
-def check_later_status(fn):
-	def checker(*args):
-		tag = args[1]
-		line = args[0]
-		check_tag = "@later"
-		return check_status(fn, line, tag, check_tag)
-	return checker"""
 
 
 def check_status(fn, test_tag):
@@ -63,13 +37,6 @@ def has_tag(line, tag):
 		return True
 	else:
 		return False	
-
-"""def is_maybe(line):
-	if line.find("-") ==0 :
-		return True
-	else:
-		return False
-"""
 
 def get_nvname(note_name):
 	current = note_name.replace(".txt","")
