@@ -22,17 +22,42 @@ NOTES_DIR = "~/Dropbox/notes/.*"
 
 notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")
 
+"""
+def check_later_status(fn):
+	def checker(*args):
+		tag = args[1]
+		line = args[0]
+		check_tag = "@later"
+		return check_status(fn, line, tag, check_tag)
+	return checker"""
+
+
+def check_done_status(fn):
+	test_tag = "@done"
+	def checker(*args):
+		tag = args[1]
+		line = args[0]
+		if tag != test_tag:
+			#print line
+			print has_tag(line, test_tag),
+			print tag, test_tag
+	return checker
+	#check_status(fn, "@done")
+
+# @check_later_status
+#@check_done_status
 def has_tag(line, tag):
 	if line.find(tag) >-1 :
 		return True
 	else:
 		return False	
 
-def is_maybe(line):
+"""def is_maybe(line):
 	if line.find("-") ==0 :
 		return True
 	else:
 		return False
+"""
 
 def get_nvname(note_name):
 	current = note_name.replace(".txt","")
@@ -46,7 +71,6 @@ def parse_notes():
 	note_actions = []
 	for note in notes:
 		note_tags = defaultdict(list)
-		maybes = []
 		lines = open(note,"r").readlines()
 		for line in lines:
 			test_line = line.strip()
@@ -70,4 +94,5 @@ def report_tag(note_actions, tag):
 				print ""
 
 note_actions = parse_notes()
+print len(note_actions)
 report_tag(note_actions, "@todo")
