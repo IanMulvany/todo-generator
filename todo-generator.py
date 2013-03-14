@@ -4,8 +4,10 @@ from optparse import OptionParser
 
 NOTES_DIR = "~/Dropbox/notes/.*"
 
-notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")
 
+def get_notes():
+	notes = glob.glob("/Users/ian/Dropbox/notes/nv/*")		
+	return notes
 
 def check_status(fn, test_tag):
 	def checker(*args):
@@ -47,7 +49,7 @@ def get_nvname(note_name):
 
 tags = ["@todo", "@done", "@later"]
 
-def parse_notes():
+def parse_notes(notes):
 	note_actions = []
 	for note in notes:
 		note_tags = defaultdict(list)
@@ -77,9 +79,10 @@ parser = OptionParser()
 parser.add_option("-t", "--type", dest="type", help="pick type of action to look for t - @todo, l @later, d @done", metavar="FILE")
 (options, args) = parser.parse_args()
 type = options.type 
-print type
 
-note_actions = parse_notes()
+notes = get_notes()
+note_actions = parse_notes(notes)
+
 if type == "t":
 	report_tag(note_actions, "@todo")
 elif type == "d":
