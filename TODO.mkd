@@ -1,3 +1,7 @@
+2013-07-08
+- add a way to filter for blog drafts that are current working drafts @done 2013-07-08
+
+
 2013-03-14
 - add a way to filter potential todos
 - schedule the task to run every 30 minutes
