@@ -2,10 +2,23 @@ import glob
 from collections import defaultdict
 from optparse import OptionParser
 
+"""
+	parse a set of text files, and create a new text file that contains
+	pointers to other files that have specific tags.
+
+	Currently supporting indexing against the following tags:
+
+	@todo
+	@done
+	@later
+	@currentdraft (in progress)
+"""
+
 NOTES_DIR = "~/Dropbox/notes/.*"
+tags = ["@todo", "@done", "@later", "@reminder", "@currentdraft"]
+filter_list = ["current-todos", "current-later", "current-dones", "current-reminders", "current-drafts"]
 
 def isInFilter(s):
-	filter_list = ["current-todos", "current-later", "current-dones", "current-reminders"]
 	for f in filter_list:
 	    if s.find(f) != -1:
 	        return False
@@ -24,11 +37,11 @@ def check_status(fn, test_tag):
 		line = args[0]
 		if tag == test_tag: 
 			# if the tag we are testing
-			# is the smdone, just eval the function
+			# is the @done, just eval the function
 			return fn(line, tag)
 		else:
 			if line.find(test_tag) >-1 : 
-				# if the tag is not @ done, return false if @done is in 
+				# if the tag is not @done, return false if @done is in 
 				# the line
 				return False
 			else:
@@ -42,10 +55,15 @@ def check_done_status(fn):
 def check_later_status(fn):
 	return check_status(fn, "@later")
 
-def check_later_status(fn):
+def check_reminder_status(fn):
 	return check_status(fn, "@reminder")
 
+def check_draft_status(fn):
+	return check_status(fn, "@currentdraft")
+
+@check_draft_status
 @check_later_status
+@check_reminder_status
 @check_done_status
 def has_tag(line, tag):
 	if line.find(tag) >-1 :
@@ -58,8 +76,6 @@ def get_nvname(note_name):
 	current2 = current.replace("/Users/ian/Dropbox/notes/nv/","")
 	nvname = current2
 	return nvname
-
-tags = ["@todo", "@done", "@later", "@reminder"]
 
 def parse_notes(notes):
 	note_actions = []
@@ -88,7 +104,7 @@ def report_tag(note_actions, tag):
 				print ""
 
 parser = OptionParser()
-parser.add_option("-t", "--type", dest="type", help="pick type of action to look for t - @todo, l @later, d @done, r @reminder", metavar="FILE")
+parser.add_option("-t", "--type", dest="type", help="pick type of action to look for t - @todo, l @later, d @done, r @reminder, c @currentdraft", metavar="FILE")
 (options, args) = parser.parse_args()
 type = options.type 
 
@@ -101,7 +117,9 @@ elif type == "d":
 	report_tag(note_actions, "@done")
 elif type == "l":
 	report_tag(note_actions, "@later")
-elif type == "l":
+elif type == "r":
 	report_tag(note_actions, "@reminder")
+elif type == "c":
+	report_tag(note_actions, "@currentdraft")
 else:
 	print "no action type specified"

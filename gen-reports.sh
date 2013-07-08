@@ -3,3 +3,4 @@ python /Users/ian/code/public-code/todo-generator/todo-generator.py -t t > ~/Dro
 python /Users/ian/code/public-code/todo-generator/todo-generator.py -t d > ~/Dropbox/notes/nv/current-dones.txt 
 python /Users/ian/code/public-code/todo-generator/todo-generator.py -t l > ~/Dropbox/notes/nv/current-later.txt 
 python /Users/ian/code/public-code/todo-generator/todo-generator.py -t r > ~/Dropbox/notes/nv/current-reminders.txt 
+python /Users/ian/code/public-code/todo-generator/todo-generator.py -t c > ~/Dropbox/notes/nv/current-drafts.txt 
